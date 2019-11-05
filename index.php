@@ -18,7 +18,33 @@
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 	
 		<script>
-			// código javascript						
+			//Verifica se o document está pronto e caso esteja executa uma função
+			$(document).ready( function(){
+
+				//Verifica se os campos usuario e senha foram preenchidos
+				$('#btn_login').click( function(){//Dispara função ao clicar no botão
+
+					var campo_vazio = false;
+
+					if($('#campo_usuario').val() == ''){
+						$('#campo_usuario').css({'border-color': '#A94442'});//Altera o CSS caso campo vazio
+						campo_vazio = true; //Evita o envio do form caso tenha o campo usuario vazio
+					} else {
+						$('#campo_usuario').css({'border-color': '#CCC'});//Altera o CSS de campo preenchido
+					}
+
+					if($('#campo_senha').val() == ''){
+						$('#campo_senha').css({'border-color': '#A94442'});//Altera o CSS caso campo vazio
+						campo_vazio = true;//Evita o envio do form caso tenha o campo senha vazio
+					} else {
+						$('#campo_senha').css({'border-color': '#CCC'});//Altera o CSS de campo preenchido
+					}
+
+					if(campo_vazio) return false; //Se campo vazio for true n deixa enviar o form
+				});
+
+			});
+
 		</script>
 	</head>
 
