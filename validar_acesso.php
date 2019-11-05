@@ -10,7 +10,7 @@
 
 
 	$usuario = $_POST['usuario'];
-	$senha	 = $_POST['senha'];
+	$senha	 = md5($_POST['senha']);//Criptografamos aqui tbm para ao fazer a comparação com a senha criptografada no banco dar cert o acesso
 
 
 	$sql = " SELECT usuario, email FROM usuarios WHERE usuario = '$usuario' AND senha = '$senha' ";

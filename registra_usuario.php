@@ -6,7 +6,7 @@
 	
 	$email		 = $_POST['email'];
 	
-	$senha 		 = $_POST['senha'];
+	$senha 		 = md5($_POST['senha']);//Esse md5 serve para gerar um hash de 32 caracteres que serve como criptografia para a informação nele aplicada, no caso a var $senha já recebe a senha do cliente criptografada
 
 
 	//instanciando a classe db e gerando um objeto de conexão com o banco
