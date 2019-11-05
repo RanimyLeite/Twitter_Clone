@@ -20,7 +20,14 @@
 		//Caso retorne um Resource nós exploramos a informação em estrutura de array
 		$dados_usuario = mysqli_fetch_array($resultado_id);// retorna os dados em estrutura de array
 
-		var_dump($resultado_id);
+		//--------------------> Verifica a existencia de um usuario no banco <----------------------//
+		//isset verifica se a variavel existe, no caso se existe usuario preenchido
+		if(isset($dados_usuario['usuario'])){
+			echo 'Usuário existe!';
+		} else {
+			//Caso n exista o usuario ele é redirecionado para o index com um error no link via get
+			header('Location: index.php?erro=1');
+		}
 	} else {
 		echo 'Erro na execução da consulta, favor entrar em contato com o admin do site!';
 	}

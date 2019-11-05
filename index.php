@@ -1,3 +1,9 @@
+<?php
+	//if ternário, se(?) o erro existir ele recupera o valor, se não (:) ele atribui 0 
+	$erro = isset($_GET['erro']) ? $_GET['erro'] : 0; //testa se a variavel $erro existe
+
+?>
+
 <!DOCTYPE HTML>
 <html lang="pt-br">
 	<head>
@@ -34,7 +40,9 @@
 	        <div id="navbar" class="navbar-collapse collapse">
 	          <ul class="nav navbar-nav navbar-right">
 	            <li><a href="inscrevase.php">Inscrever-se</a></li>
-	            <li class="">
+	            <!--  Teste ternário para forçar abertura do form em caso de erro -->
+	            <!--  Se $erro == 1, atribui open a classe, obrigando-a a abrir, se não deixa o valor vazio -->
+	            <li class="<?= $erro == 1 ? 'open' : '' ?>"><!-- short tag do php/ tag curta-->
 	            	<a id="entrar" data-target="#" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Entrar</a>
 					<ul class="dropdown-menu" aria-labelledby="entrar">
 						<div class="col-md-12">
@@ -55,6 +63,12 @@
 								
 							</form>
 						</form>
+						<?php
+							// Mensagem de erro dentro do form para dados n cadastrados ou errados
+							if($erro == 1){
+								echo '<font color= "#FF0000"><b>Usuário e ou senha invalido(s)!</b></font>';
+							}
+						?>
 				  	</ul>
 	            </li>
 	          </ul>
