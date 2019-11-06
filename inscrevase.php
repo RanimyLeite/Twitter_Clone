@@ -1,3 +1,13 @@
+<?php
+
+	//Esse teste ternário se dá pelo fato de que se n atribuir 0 a var $erro_usuario para quando não existir um erro de usuario ou email já registrado, ao acessar a url inscrevase.php aparecerá um erro, então se atribui um valor para quando tiver erro, tenho que atribuir um 0 para quando n tiver
+	$erro_usuario = isset($_GET['erro_usuario']) ? $_GET['erro_usuario'] = 1 : 0 ;//recebendo os erros de usuario já registrado
+	$erro_email   = isset($_GET['erro_email'])	 ? $_GET['erro_email']   = 1 : 0 ;//recebendo os erros de email já registrado
+
+
+?>
+
+
 <!DOCTYPE HTML>
 <html lang="pt-br">
 	<head>
@@ -48,10 +58,20 @@
 				<form method="post" action="registra_usuario.php" id="formCadastrarse">
 					<div class="form-group">
 						<input type="text" class="form-control" id="usuario" name="usuario" placeholder="Usuário" required="requiored">
+						<?php
+							if($erro_usuario){
+								echo '<font color= "#FF0000"><b>Usuário já cadastrado!!</b></font>';
+							}
+						?>
 					</div>
 
 					<div class="form-group">
 						<input type="email" class="form-control" id="email" name="email" placeholder="Email" required="requiored">
+						<?php
+							if($erro_email){
+								echo '<font color= "#FF0000"><b>E-mail já cadastrado!!</b></font>';
+							}
+						?>
 					</div>
 					
 					<div class="form-group">
