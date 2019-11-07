@@ -13,7 +13,7 @@
 	$senha	 = md5($_POST['senha']);//Criptografamos aqui tbm para ao fazer a comparação com a senha criptografada no banco dar cert o acesso
 
 
-	$sql = " SELECT usuario, email FROM usuarios WHERE usuario = '$usuario' AND senha = '$senha' ";
+	$sql = " SELECT id, usuario, email FROM usuarios WHERE usuario = '$usuario' AND senha = '$senha' ";
 
 	$objDb = new db();
 	$link = $objDb->conecta_mysql();
@@ -30,6 +30,7 @@
 		//isset verifica se a variavel existe, no caso se existe usuario preenchido
 		if(isset($dados_usuario['usuario'])){
 
+			$_SESSION['id_usuario'] = $dados_usuario['id'];//Recuperado para ser ultilizado como id_usuario dos posts de tweet, identificando assim qual usuario postou cada tweet e etc
 			$_SESSION['usuario'] = $dados_usuario['usuario'];
 			$_SESSION['email'] = $dados_usuario['email'];
 

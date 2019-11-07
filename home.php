@@ -21,6 +21,28 @@
 		<!-- bootstrap - link cdn -->
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 	
+		<script type="text/javascript">
+			
+			$(document).ready(function (){
+				//associar o evento de click ao botão
+
+				$('#btn_tweet').click(function(){
+
+					if($('#texto_tweet').val().length > 0){
+						//Tratando tweet digitado e enviando 
+						$.ajax({
+							url: 'inclui_tweet.php',
+							method: 'post',
+							data: $('#form_tweet').serialize(),//Com o .serialize() ele pega todos os dados do form com id = 'form_tweet' e envia para inclui_tweet.php, obs! O name do input precisa ser igual ao indice da variavel super global que vai receber no caso $_POST['texto_tweet']
+							success: function(data){
+								$('#texto_tweet').val(''); // limpa o input apos o envio do tweet
+								alert('Tweet incluido com sucesso!');
+							}
+						});
+					} 
+				})
+			})
+		</script>
 	</head>
 
 	<body>
@@ -45,8 +67,6 @@
 	        </div><!--/.nav-collapse -->
 	      </div>
 	    </nav>
-
-
 	    <div class="container">
 	    	<div class="col-md-3">
 	    		<div class="panel panel-default">
@@ -67,14 +87,13 @@
 	    	<div class="col-md-6">
 	    		<div class="panel panel-default">
 	    			<div class="panel-body">
-	    				<div class="input-group">
-	    					
-	    					<input type="text" class="form-control" placeholder="O que está acontecendo agora?" maxlength="140">
+	    				<form id="form_tweet" class="input-group">
+	    					<input type="text" id="texto_tweet" name="texto_tweet" class="form-control" placeholder="O que está acontecendo agora?" maxlength="140">
 	    					<span class="input-group-btn">
-	    						<button class="btn btn-default" type="button">Tweet</button>
+	    						<button class="btn btn-default" id="btn_tweet" type="button">Tweet</button>
 	    					</span>
 
-	    				</div>
+	    				</form>
 	    			</div>
 	    		</div>
 			</div>
