@@ -36,14 +36,13 @@
 							data: $('#form_tweet').serialize(),//Com o .serialize() ele pega todos os dados do form com id = 'form_tweet' e envia para inclui_tweet.php, obs! O name do input precisa ser igual ao indice da variavel super global que vai receber no caso $_POST['texto_tweet']
 							success: function(data){
 								$('#texto_tweet').val(''); // limpa o input apos o envio do tweet
-								alert('Tweet incluido com sucesso!');
+								atualizaTweet();//Faz com que o tweet seja carregado de forma assincrona ao clicar no botão
 							}
 						});
 					} 
 				});
 
 				//Função para carregar e mostar os tweet na div 
-
 				function atualizaTweet(){
 					//carregar os tweets
 
@@ -55,7 +54,7 @@
 					});
 				}
 
-				atualizaTweet(); //Chamando a execução da função
+				atualizaTweet();//Chamando a execução da função
 			});
 		</script>
 	</head>
