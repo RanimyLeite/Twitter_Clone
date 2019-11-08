@@ -26,35 +26,20 @@
 			$(document).ready(function (){
 				//associar o evento de click ao botão
 
-				$('#btn_tweet').click(function(){
+				$('#btn_procurar_pessoa').click(function(){
 
-					if($('#texto_tweet').val().length > 0){
+					if($('#nome_pessoa').val().length > 0){
 						//Tratando tweet digitado e enviando 
 						$.ajax({
-							url: 'inclui_tweet.php',
+							url: 'get_pessoas.php',
 							method: 'post',
-							data: $('#form_tweet').serialize(),//Com o .serialize() ele pega todos os dados do form com id = 'form_tweet' e envia para inclui_tweet.php, obs! O name do input precisa ser igual ao indice da variavel super global que vai receber no caso $_POST['texto_tweet']
+							data: $('#form_procurar_pessoas').serialize(),//Com o .serialize() ele pega todos os dados do form com id = 'form_procurar_pessoas' e envia para get_pessoas.php, obs! O name do input precisa ser igual ao indice da variavel super global que vai receber no caso $_POST['nome_pessoa']
 							success: function(data){
-								$('#texto_tweet').val(''); // limpa o input apos o envio do tweet
-								atualizaTweet();//Faz com que o tweet seja carregado de forma assincrona ao clicar no botão
+								$('#pessoas').html(data);
 							}
 						});
 					} 
 				});
-
-				//Função para carregar e mostar os tweet na div 
-				function atualizaTweet(){
-					//carregar os tweets
-
-					$.ajax({
-						url: 'get_tweet.php',
-						success: function(data){
-							$('#tweets').html(data); //Inclui os tweets em forma de html dentro da div com id #tweets
-						}
-					});
-				}
-
-				atualizaTweet();//Chamando a execução da função
 			});
 		</script>
 	</head>
@@ -76,6 +61,7 @@
 	        
 	        <div id="navbar" class="navbar-collapse collapse">
 	          <ul class="nav navbar-nav navbar-right">
+	          	<li><a href="home.php">Home</a></li>
 	            <li><a href="sair.php">Sair</a></li>
 	          </ul>
 	        </div><!--/.nav-collapse -->
@@ -101,23 +87,23 @@
 	    	<div class="col-md-6">
 	    		<div class="panel panel-default">
 	    			<div class="panel-body">
-	    				<form id="form_tweet" class="input-group">
-	    					<input type="text" id="texto_tweet" name="texto_tweet" class="form-control" placeholder="O que está acontecendo agora?" maxlength="140">
+	    				<form id="form_procurar_pessoas" class="input-group">
+	    					<input type="text" id="nome_pessoa" name="nome_pessoa" class="form-control" placeholder="Quem você está procurando?" maxlength="140">
 	    					<span class="input-group-btn">
-	    						<button class="btn btn-default" id="btn_tweet" type="button">Tweet</button>
+	    						<button class="btn btn-default" id="btn_procurar_pessoa" type="button">Procurar</button>
 	    					</span>
 
 	    				</form>
 	    			</div>
 	    		</div>
-	    		<div id="tweets" class="list-group">
+	    		<div id="pessoas" class="list-group">
 	    			
 	    		</div>
 			</div>
 			<div class="col-md-3">
 				<div class="panel panel-default">
 					<div class="panel-body">
-						<h4><a href="Procurar_pessoas.php">Procurar por pessoas</a></h4>
+						
 					</div>
 				</div>
 			</div>
