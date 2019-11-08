@@ -40,8 +40,23 @@
 							}
 						});
 					} 
-				})
-			})
+				});
+
+				//Função para carregar e mostar os tweet na div 
+
+				function atualizaTweet(){
+					//carregar os tweets
+
+					$.ajax({
+						url: 'get_tweet.php',
+						success: function(data){
+							$('#tweets').html(data); //Inclui os tweets em forma de html dentro da div com id #tweets
+						}
+					});
+				}
+
+				atualizaTweet(); //Chamando a execução da função
+			});
 		</script>
 	</head>
 
@@ -95,6 +110,9 @@
 
 	    				</form>
 	    			</div>
+	    		</div>
+	    		<div id="tweets" class="list-group">
+	    			
 	    		</div>
 			</div>
 			<div class="col-md-3">
