@@ -26,7 +26,7 @@
 			$(document).ready(function (){
 				//associar o evento de click ao botão
 
-				$('#btn_procurar_pessoa').click(function(){
+				$('#btn_procurar_pessoa').click( function(){
 
 					if($('#nome_pessoa').val().length > 0){
 						//Tratando tweet digitado e enviando 
@@ -36,6 +36,19 @@
 							data: $('#form_procurar_pessoas').serialize(),//Com o .serialize() ele pega todos os dados do form com id = 'form_procurar_pessoas' e envia para get_pessoas.php, obs! O name do input precisa ser igual ao indice da variavel super global que vai receber no caso $_POST['nome_pessoa']
 							success: function(data){
 								$('#pessoas').html(data);
+
+								$('.btn_seguir').click( function(){
+
+									var id_usuario = $(this).data('id_usuario');//O this referencia o elemento clicado ou seja, pegaremos a informaçao do elemento clicado, atribuimos a uma var para facilitar a manipulação, nesse caso pegaremos apenas o id do usuario a ser seguido
+									$.ajax({
+										url: 'seguir.php',
+										method: 'post',
+										data: { seguir_id_usuario: id_usuario },// bota como valor da chave seguir_id_usuario o id_usuario que é a var que recupera o id do user a ser seguido em ar id_usuario = $(this).data('id_usuario');
+										success: function(data){
+											alert('Registro efetuado com sucesso!');
+										}
+									})
+								});
 							}
 						});
 					} 
