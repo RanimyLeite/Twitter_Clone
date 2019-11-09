@@ -1,44 +1,63 @@
 <?php
 
-	session_start();
+    session_start();
 
-	if(!isset($_SESSION['usuario'])){
-
-		header('Location:index.php?erro=1');
+    if(!$_SESSION['usuario']){
+		header('Location: index.php?erro=1');
 	}
 
-	require_once('db.config.php');
+    require_once('db.config.php');
 
-	$nome_pessoa = $_POST['nome_pessoa'];
-	$id_usuario  = $_SESSION['id_usuario'];//Recuperando o id do usuario logado
+    $nome_pessoa = $_POST['nome_pessoa'];
+    $id_usuario = $_SESSION['id_usuario'];
 
+    $objDb = new db();
+    $link = $objDb->conecta_mysql();
+    
+    $sql = "SELECT u.*, us.* "; 
+    $sql .= "FROM usuarios AS u ";
+    $sql .= "LEFT JOIN usuarios_seguidores AS us ON (us.id_usuario = $id_usuario AND u.id = us.seguindo_id_usuario) ";
+    $sql .= "WHERE usuario LIKE '%$nome_pessoa%' AND id <> $id_usuario";
 
-	$objDb = new db();//instanciação do objeto
-	$link = $objDb->conecta_mysql();
+    $resultado_id = mysqli_query($link, $sql);
 
-	//Retorna tudo da tabela usuarios onde usuario for igual ao usuario informado e id do usuario for diferente do id usuario da sessão
-	//Esse like faz com que ao escrevermos apenas parte do nome e apertar o procurar apareça todos os nomes que contenham aquela parte ecrita, e o % serve para dizer que não importa o que tem antes, se terminar com a palavra pesquisada será retornado e a porcentagem do final serve para a msm coisa mudando apenas que será retornado os nomes que começarem com a informação digitada
-	$sql = " SELECT * FROM usuarios WHERE usuario like '%$nome_pessoa%' AND id <> $id_usuario ";
+    if($resultado_id){
+    	//Para cada interação a var $registro vai receber um registro(informações) do bd, isso até acabar os registros
+        while($registro = mysqli_fetch_array($resultado_id, MYSQLI_ASSOC)){
 
+            echo '<a href="#" class="list-group-item">';
 
-	$resultado_id = mysqli_query($link, $sql);
+                echo '<strong>' . $registro['usuario'] . '</strong> <small> - ' . $registro['email'] . ' </small>';
 
-	if($resultado_id){
-		//Para cada interação a var $registro vai receber um registro(informações) do bd, isso até acabar os registros
-		while($registro = mysqli_fetch_array($resultado_id, MYSQLI_ASSOC)){
-			echo '<a href="#" class="list-group-item">';
-				echo '<strong>'.$registro['usuario'].'</strong> <small>- '.$registro['email'].' </small>';
-				echo '<p class="list-group-item-text pull-right">';
-					//esse trecho data-id_usuario="'.$registro['id'].'" serve para armazenar o id do usuario ao qual eu quero seguir, isse id concatenado com o id da pessoa a ser seguida serve para diferenciar cada elemento
-					echo '<button type="button" id="btn_seguir_'.$registro['id'].'" class="btn btn-default btn_seguir" data-id_usuario="'.$registro['id'].'" >Seguir</button>';
-					echo '<button type="button" id="btn_deixar_seguir_'.$registro['id'].'" style="display:none" class="btn btn-primary btn_deixar_seguir" data-id_usuario="'.$registro['id'].'" >Deixar de Seguir</button>';
-				echo '</p>';
-				echo '<div class="clearfix"></div>';
-			echo '<a/>';
-		}
-	} else {
-		echo 'Erro na consulta de tweets no Banco de Dados!';
-	}
+                echo '<p class="list-group-item-text pull-right">';
 
+                    $esta_seguindo_usuario_sn = isset($registro['id_usuario_seguidor']) && !empty($registro['id_usuario_seguidor']) ? 'S' : 'N';
+
+                    $btn_seguir_display = 'block';
+                    $btn_deixar_seguir_display = 'block';
+
+                    if($esta_seguindo_usuario_sn == 'N'){
+                        $btn_deixar_seguir_display = 'none';
+                    }else{
+                        $btn_seguir_display = 'none';
+                    }
+                    //esse trecho data-id_usuario="'.$registro['id'].'" serve para armazenar o id do usuario ao qual eu quero seguir, isse id concatenado com o id da pessoa a ser seguida serve para diferenciar
+                    echo '<button type="button" id="btn_seguir_' . $registro['id'] . '" style="display: ' . $btn_seguir_display . '" class="btn btn-default btn_seguir" data-id_usuario="' . $registro['id'] . '">Seguir</button>';
+
+                    echo '<button type="button" id="btn_deixar_seguir_' . $registro['id'] . '" style="display: ' . $btn_deixar_seguir_display . '" class="btn btn-primary btn_deixar_seguir" data-id_usuario="' . $registro['id'] . '">Deixar de Seguir</button>';
+                
+                echo '</p>';
+
+                echo '<div class="clearfix"></div>';
+
+            echo '</a>';
+
+        }
+
+    }else{
+    
+        echo 'Erro na consulta de usuários no banco de dados!';
+
+    }
 
 ?>
