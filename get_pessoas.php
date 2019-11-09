@@ -31,6 +31,7 @@
 				echo '<p class="list-group-item-text pull-right">';
 					//esse trecho data-id_usuario="'.$registro['id'].'" serve para armazenar o id do usuario ao qual eu quero seguir
 					echo '<button type="button" class="btn btn-default btn_seguir" data-id_usuario="'.$registro['id'].'" >Seguir</button>';
+					echo '<button type="button" class="btn btn-primary btn_deixar_seguir" data-id_usuario="'.$registro['id'].'" >Deixar de Seguir</button>';
 				echo '</p>';
 				echo '<div class="clearfix"></div>';
 			echo '<a/>';

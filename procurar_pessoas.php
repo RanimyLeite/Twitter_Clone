@@ -37,6 +37,8 @@
 							success: function(data){
 								$('#pessoas').html(data);
 
+								//Função para seguir pessoas
+
 								$('.btn_seguir').click( function(){
 
 									var id_usuario = $(this).data('id_usuario');//O this referencia o elemento clicado ou seja, pegaremos a informaçao do elemento clicado, atribuimos a uma var para facilitar a manipulação, nesse caso pegaremos apenas o id do usuario a ser seguido
@@ -46,6 +48,21 @@
 										data: { seguir_id_usuario: id_usuario },// bota como valor da chave seguir_id_usuario o id_usuario que é a var que recupera o id do user a ser seguido em ar id_usuario = $(this).data('id_usuario');
 										success: function(data){
 											alert('Registro efetuado com sucesso!');
+										}
+									})
+								});
+
+								//Função para deixat de seguir 
+								$('.btn_deixar_seguir').click( function(){
+
+									var id_usuario = $(this).data('id_usuario');
+
+									$.ajax({
+										url: 'deixar_seguir.php',
+										method: 'post',
+										data: { deixar_seguir_id_usuario: id_usuario },
+										success: function(data){
+											alert('Registro removido com sucesso!');
 										}
 									})
 								});
