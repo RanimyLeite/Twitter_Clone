@@ -42,6 +42,11 @@
 								$('.btn_seguir').click( function(){
 
 									var id_usuario = $(this).data('id_usuario');//O this referencia o elemento clicado ou seja, pegaremos a informaçao do elemento clicado, atribuimos a uma var para facilitar a manipulação, nesse caso pegaremos apenas o id do usuario a ser seguido
+
+									//Essas duas Linhas a seguir servem para alternar os botões de follow e unfollow
+									$('#btn_seguir_'+id_usuario).hide();//Oculta o botão
+									$('#btn_deixar_seguir_'+id_usuario).show();//Exibe o botão
+
 									$.ajax({
 										url: 'seguir.php',
 										method: 'post',
@@ -52,10 +57,14 @@
 									})
 								});
 
-								//Função para deixat de seguir 
+								//Função para deixar de seguir 
 								$('.btn_deixar_seguir').click( function(){
 
 									var id_usuario = $(this).data('id_usuario');
+
+									//Essas duas Linhas a seguir servem para alternar os botões de follow e unfollow
+									$('#btn_seguir_'+id_usuario).show();//Oculta o botão
+									$('#btn_deixar_seguir_'+id_usuario).hide();//Exibe o botão
 
 									$.ajax({
 										url: 'deixar_seguir.php',
