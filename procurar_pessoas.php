@@ -87,7 +87,7 @@
 										method: 'post',
 										data: { seguir_id_usuario: id_usuario },// bota como valor da chave seguir_id_usuario o id_usuario que é a var que recupera o id do user a ser seguido em ar id_usuario = $(this).data('id_usuario');
 										success: function(data){
-											alert('Registro efetuado com sucesso!');
+											
 										}
 									})
 								});
@@ -106,7 +106,7 @@
 										method: 'post',
 										data: { deixar_seguir_id_usuario: id_usuario },
 										success: function(data){
-											alert('Registro removido com sucesso!');
+											
 										}
 									})
 								});
