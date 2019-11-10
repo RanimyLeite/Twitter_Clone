@@ -18,7 +18,10 @@
 	//Seleciona apenas as informações de t.data_inclusao, t.tweet da tabela tweet, atribui a ela um alias de t, junta com a tabela usuarios(JOIN) e atribui a ela um alias de u, usando o ON é relacionado o o id_usuario da tabela tweet(t) com o id da tabela usuarios(a), onde (WHERE) o id usuario for igual ao id_usuario da var de sessão e ordena as informações(tweets) de forma decrescente DESC
 	$sql = " SELECT DATE_FORMAT(t.data_inclusao, '%d %b %Y %T') AS data_inclusao_formatada, t.tweet, u.usuario";
 	$sql.= " FROM tweet AS t JOIN usuarios AS u ON (t.id_usuario = u.id) ";
-	$sql.= " WHERE id_usuario = $id_usuario ORDER BY data_inclusao DESC ";
+	$sql.= " WHERE id_usuario = $id_usuario";
+	//Essa linha serve para listar para o usuario tanto os seus tweets quanto os de quem o user está seguindo 
+	$sql.= " OR id_usuario IN (select seguindo_id_usuario from usuarios_seguidores where id_usuario = $id_usuario) ";
+	$sql.= " ORDER BY data_inclusao DESC ";
 
 
 	$resultado_id = mysqli_query($link, $sql);
